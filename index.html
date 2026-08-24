@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mita's Birthday Surprise 🎂</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Georgia,"Noto Serif Bengali",serif;background:#fff4f8;color:#4a2940;overflow-x:hidden}
+.screen{min-height:100vh;display:none;align-items:center;justify-content:center;padding:25px;position:relative;overflow:hidden}
+.screen.active{display:flex}
+.bg{position:absolute;inset:0;background:radial-gradient(circle at 12% 15%,#ff4f87aa,transparent 30%),radial-gradient(circle at 88% 25%,#ff829f88,transparent 30%),radial-gradient(circle at 55% 90%,#ffb0b877,transparent 32%),linear-gradient(135deg,#fff4f8,#fff0f5 52%,#fff7f7);z-index:-2}
+.stars{position:absolute;inset:0;background-image:radial-gradient(#d9587d 1px,transparent 1px);background-size:55px 55px;opacity:.25;z-index:-1}
+.card{width:min(900px,100%);text-align:center;background:linear-gradient(145deg,#ffffff12,#ffffff06);border:1px solid #ffffff;border-radius:35px;padding:55px 30px;backdrop-filter:blur(16px);box-shadow:0 25px 80px #0008}
+.badge{display:inline-block;padding:9px 18px;border-radius:30px;background:#ffe1eb;border:1px solid #ff8fb0;color:#b51e4f;margin-bottom:20px}
+h1{font-size:clamp(2.5rem,8vw,5.5rem);line-height:1.05;background:linear-gradient(90deg,#fff,#ffb6d9,#d6b5ff,#fff);-webkit-background-clip:text;color:transparent;margin-bottom:20px}
+h2{font-size:clamp(2rem,5vw,3.5rem);margin-bottom:18px}
+p{font-size:1.15rem;line-height:1.9;color:#5b3342}
+.btn{border:0;cursor:pointer;margin-top:30px;padding:16px 30px;border-radius:999px;background:linear-gradient(100deg,#ff3d72,#e91e63 48%,#ff6b6b);color:#4a2940;font-size:1.05rem;font-weight:bold;box-shadow:0 10px 30px #ff3d7244,0 0 25px #e91e6333;transition:.25s}
+.btn:hover{transform:translateY(-4px) scale(1.03)}
+.photoBox{width:210px;height:210px;border-radius:50%;margin:0 auto 25px;border:2px dashed #ffffff55;display:flex;align-items:center;justify-content:center;color:#8a4b63;padding:25px}
+.quote{font-size:1.4rem;color:#b51e4f;margin:22px auto;max-width:720px}
+.memory{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:25px 0}
+.mini{width:130px;height:130px;border-radius:22px;border:2px dashed #ffffff45;display:flex;align-items:center;justify-content:center;color:#8f536b;font-size:.9rem;padding:10px}
+.note{margin:22px auto;padding:20px;border-radius:24px;background:#ffffffcc;border:1px solid #f5c7d5;max-width:720px}
+.signature{margin-top:25px;color:#a33a6e;font-style:italic}
+.hearts span{position:fixed;bottom:-40px;font-size:25px;animation:float 8s linear infinite;opacity:.8;z-index:5}
+@keyframes float{to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+.pop{animation:pop .7s ease both}
+@keyframes pop{from{opacity:0;transform:scale(.75) translateY(25px)}to{opacity:1;transform:none}}
+.small{font-size:.9rem;color:#a35e77;margin-top:15px}
+
+/* Premium animations */
+.card{animation:cardGlow 4s ease-in-out infinite alternate}
+@keyframes cardGlow{from{box-shadow:0 25px 80px #0008,0 0 0 #ff3d7200}to{box-shadow:0 25px 80px #0008,0 0 42px #e91e6322}}
+.badge{animation:badgePulse 2.8s ease-in-out infinite}
+@keyframes badgePulse{50%{box-shadow:0 0 24px #ff7ab533}}
+.btn{background-size:200% 100%;animation:buttonShine 4s ease-in-out infinite}
+@keyframes buttonShine{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.photoBox{animation:photoPulse 3s ease-in-out infinite}
+@keyframes photoPulse{50%{box-shadow:0 0 35px #ff65b433;transform:scale(1.02)}}
+.memory .mini{transition:.35s;animation:memoryFloat 4s ease-in-out infinite}
+.memory .mini:nth-child(2){animation-delay:.7s}.memory .mini:nth-child(3){animation-delay:1.4s}
+@keyframes memoryFloat{50%{transform:translateY(-7px);box-shadow:0 10px 28px #0004}}
+.particle{position:fixed;pointer-events:none;z-index:1;border-radius:50%;background:#fff;opacity:.7;animation:particleMove linear forwards}
+@keyframes particleMove{from{transform:translateY(0) scale(1);opacity:0}15%{opacity:.7}to{transform:translateY(-110vh) scale(.2);opacity:0}}
+.shooting{position:fixed;width:90px;height:2px;background:linear-gradient(90deg,#fff0,#fff,#ff9acb00);transform:rotate(-28deg);z-index:1;pointer-events:none;animation:shoot 1.2s linear forwards}
+@keyframes shoot{from{opacity:0;transform:translate(0,0) rotate(-28deg)}20%{opacity:1}to{opacity:0;transform:translate(-260px,260px) rotate(-28deg)}}
+.spark{position:fixed;pointer-events:none;z-index:20;font-size:18px;animation:spark 1.5s ease-out forwards}
+@keyframes spark{from{transform:translate(0,0) scale(.5);opacity:1}to{transform:translate(var(--x),var(--y)) scale(1.4);opacity:0}}
+
+/* Extra light premium animations */
+body{background-attachment:fixed}
+.card{box-shadow:0 25px 70px #b477a52b,0 0 45px #ff4f8722}
+.screen.active .card{animation:cardEnter .8s cubic-bezier(.2,.8,.2,1) both,cardGlow 4s ease-in-out infinite alternate}
+@keyframes cardEnter{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes cardGlow{from{box-shadow:0 25px 70px #b477a52b,0 0 20px #ff3d7222}to{box-shadow:0 28px 80px #9f78c13b,0 0 48px #ff3d7240}}
+h1{filter:drop-shadow(0 8px 18px #ff3d722f)}
+.btn{position:relative;overflow:hidden}
+.btn:after{content:"";position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,#ffffff99,transparent);transform:skewX(-20deg);animation:buttonSweep 3.2s infinite}
+@keyframes buttonSweep{0%,45%{left:-100%}75%,100%{left:150%}}
+.badge{box-shadow:0 8px 25px #f1a9ca22}
+.photoBox{background:#ffffff77;box-shadow:0 0 35px #ff9dcb33}
+.memory .mini{background:#ffffffaa;box-shadow:0 12px 30px #b782a31f}
+.memory .mini:hover{transform:translateY(-10px) rotate(-1deg) scale(1.03);box-shadow:0 18px 35px #9c6fb833}
+.confetti{position:fixed;top:-20px;width:9px;height:14px;border-radius:2px;z-index:30;pointer-events:none;animation:confettiFall linear forwards}
+@keyframes confettiFall{to{transform:translate3d(var(--drift),110vh,0) rotate(720deg);opacity:0}}
+.bubble{position:fixed;border-radius:50%;border:1px solid #ffffffaa;background:#ffffff33;pointer-events:none;z-index:1;animation:bubbleRise linear forwards}
+@keyframes bubbleRise{from{transform:translateY(0) scale(.7);opacity:0}15%{opacity:.65}to{transform:translateY(-115vh) scale(1.3);opacity:0}}
+.heartFloat{position:fixed;z-index:10;pointer-events:none;animation:heartRise 5s ease-out forwards}
+@keyframes heartRise{from{transform:translateY(0) scale(.7) rotate(0);opacity:0}15%{opacity:.9}to{transform:translateY(-90vh) scale(1.2) rotate(25deg);opacity:0}}
+
+/* ULTIMATE PINK + RED BIRTHDAY MAGIC */
+.magicOverlay{position:fixed;inset:0;background:radial-gradient(circle at center,#ff3d7233,transparent 45%),#ff174d0d;z-index:18;pointer-events:none;opacity:0;animation:magicFlash 1.4s ease-out forwards}
+@keyframes magicFlash{0%{opacity:0}18%{opacity:1}100%{opacity:0}}
+.magicRing{position:fixed;left:50%;top:50%;width:30px;height:30px;border:4px solid #ff3d72;border-radius:50%;transform:translate(-50%,-50%);z-index:19;pointer-events:none;animation:ringExpand 2s ease-out forwards;box-shadow:0 0 25px #ff3d72,0 0 60px #ff174d}
+@keyframes ringExpand{to{width:120vmax;height:120vmax;opacity:0;border-width:1px}}
+.bigHeart{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:25;font-size:110px;pointer-events:none;filter:drop-shadow(0 0 30px #ff174d);animation:bigHeart .9s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes bigHeart{0%{opacity:0;transform:translate(-50%,-50%) scale(.2)}45%{opacity:1;transform:translate(-50%,-50%) scale(1.25)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.8)}}
+.firework{position:fixed;width:6px;height:6px;border-radius:50%;z-index:26;pointer-events:none;animation:firework 1.5s ease-out forwards}
+@keyframes firework{from{transform:translate(0,0) scale(1);opacity:1}to{transform:translate(var(--fx),var(--fy)) scale(.1);opacity:0}}
+.magicText{position:fixed;left:50%;top:62%;transform:translate(-50%,-50%);z-index:27;font-size:clamp(2rem,7vw,5rem);font-weight:700;color:#c9154d;text-shadow:0 4px 25px #ff7c9d66;pointer-events:none;white-space:nowrap;animation:magicText 2.2s ease-out forwards}
+@keyframes magicText{0%{opacity:0;transform:translate(-50%,-50%) scale(.5)}25%{opacity:1;transform:translate(-50%,-50%) scale(1)}75%{opacity:1}100%{opacity:0;transform:translate(-50%,-55%) scale(1.08)}}
+.extraBtn{margin-top:14px}
+</style>
+
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts"></div>
+
+<section class="screen active" id="s1">
+<div class="bg"></div><div class="stars"></div>
+<div class="card pop">
+<div class="badge">✨ A Little Birthday Surprise</div>
+<h1>Happy Birthday<br>Mita! 🎂</h1>
+<p>আজকের দিনটা তোমার জন্য একটু বিশেষ হোক।<br>তাই তোমার জন্য ছোট্ট একটা birthday surprise! 💖</p>
+<button class="btn" onclick="go(2)">🎁 Surprise খুলে দেখো</button>
+</div>
+</section>
+
+<section class="screen" id="s2">
+<div class="bg"></div><div class="stars"></div>
+<div class="card pop">
+<div class="badge">💌 For A Special Friend</div>
+<h2>মিতা, তোমার জন্য একটা কথা 🌸</h2>
+<p>বন্ধুত্বের সুন্দর মুহূর্তগুলো সবসময় মনে রাখার মতো। আজ তোমার জন্মদিনে শুধু একটা কথাই বলি—তোমার জীবনের প্রতিটা দিন যেন আরও সুন্দর হয়।</p>
+<p class="quote">“হাসি যেন কখনো কমে না যায়, আর জীবনের কঠিন সময়গুলো যেন তোমাকে আরও শক্ত করে।”</p>
+<button class="btn" onclick="go(3)">💗 আরেকটা message দেখো</button>
+</div>
+</section>
+
+<section class="screen" id="s3">
+<div class="bg"></div><div class="stars"></div>
+<div class="card pop">
+<div class="photoBox">📸<br>এখানে Mita-এর ছবি বসবে</div>
+<div class="badge">🌷 Birthday Wishes</div>
+<h2>শুভ জন্মদিন, মিতা! 🥳</h2>
+<p>তোমার জীবনে আসুক অনেক সুখ, শান্তি, আনন্দ আর সুন্দর সুন্দর মুহূর্ত। নিজের স্বপ্নের পথে এগিয়ে যাও এবং জীবনে অনেক বড় হও।</p>
+<p class="quote">“তোমার আগামী দিনগুলো হোক আজকের দিনের থেকেও বেশি সুন্দর, সফল আর আনন্দময়।”</p>
+<button class="btn" onclick="go(4)">🌟 জীবনের জন্য শুভকামনা</button>
+</div>
+</section>
+
+<section class="screen" id="s4">
+<div class="bg"></div><div class="stars"></div>
+<div class="card pop">
+<div class="badge">🌱 Best Wishes For Your Future</div>
+<h2>তোমার জীবনে অনেক উন্নতি হোক 🤍</h2>
+<div class="note">
+<p>✨ পড়াশোনা ও কাজে অনেক সফল হও<br>
+✨ তোমার সব ভালো স্বপ্ন পূরণ হোক<br>
+✨ জীবনে ভালো ভালো সুযোগ আসুক<br>
+✨ প্রতিটি বাধা সাহসের সাথে পার হতে পারো<br>
+✨ পরিবার ও প্রিয় মানুষদের নিয়ে ভালো থাকো<br>
+✨ সবসময় হাসিখুশি ও সুস্থ থাকো</p>
+</div>
+<p>আল্লাহ তোমার জীবনের প্রতিটি ভালো ইচ্ছা পূরণ করুন এবং তোমার ভবিষ্যৎকে সুন্দর ও সফল করে তুলুন। তোমার জন্য রইলো অনেক অনেক শুভকামনা। 🤲✨</p>
+<button class="btn" onclick="go(5)">🎀 শেষের surprise</button>
+</div>
+</section>
+
+<section class="screen" id="s5">
+<div class="bg"></div><div class="stars"></div>
+<div class="card pop">
+<div class="badge">🎉 Final Birthday Wish</div>
+<h2>Happy Birthday, Mita! 💖</h2>
+<p class="quote">“বন্ধুত্বটা সবসময় এমনই সুন্দর থাকুক। জীবনের প্রতিটি নতুন বছর তোমাকে তোমার স্বপ্নের আরও কাছে নিয়ে যাক।”</p>
+<div class="memory">
+<div class="mini">📷 Photo 01</div>
+<div class="mini">📷 Photo 02</div>
+<div class="mini">📷 Photo 03</div>
+</div>
+<p>অনেক হাসো, অনেক ভালো থাকো এবং জীবনে অনেক দূর এগিয়ে যাও। তোমার জন্য সবসময় রইলো একজন বন্ধুর পক্ষ থেকে আন্তরিক শুভকামনা। 🎂🌸</p>
+<div class="signature">— Happy Birthday, dear friend! 💝</div>
+<button class="btn" onclick="celebrate()">🎈 Birthday Magic ✨</button>
+<button class="btn extraBtn" onclick="go(6)">💌 একটি শেষ কথা</button>
+<p class="small">Photo জায়গাগুলোতে তোমাদের ছবি বসাতে পারবে।</p>
+</div>
+</section>
+
+<script>
+
+function createParticle(){
+ const e=document.createElement('i'); e.className='particle';
+ const size=2+Math.random()*4;
+ e.style.width=size+'px';e.style.height=size+'px';
+ e.style.left=Math.random()*100+'vw';e.style.bottom='-10px';
+ e.style.animationDuration=(7+Math.random()*8)+'s';
+ document.body.appendChild(e);setTimeout(()=>e.remove(),16000);
+}
+function shootingStar(){
+ const e=document.createElement('i');e.className='shooting';
+ e.style.left=(55+Math.random()*40)+'vw';e.style.top=(5+Math.random()*35)+'vh';
+ document.body.appendChild(e);setTimeout(()=>e.remove(),1300);
+}
+function sparkleBurst(){
+ for(let i=0;i<35;i++){
+  const e=document.createElement('i');e.className='spark';e.textContent=['✦','✧','✨','♥'][Math.floor(Math.random()*4)];
+  e.style.left='50vw';e.style.top='50vh';
+  e.style.setProperty('--x',(Math.random()*500-250)+'px');
+  e.style.setProperty('--y',(Math.random()*500-250)+'px');
+  document.body.appendChild(e);setTimeout(()=>e.remove(),1600);
+ }
+}
+
+function go(n){
+ document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+ document.getElementById('s'+n).classList.add('active');
+ window.scrollTo(0,0);
+}
+
+function megaMagic(){
+ sparkleBurst();
+ confettiBurst();
+ for(let r=0;r<5;r++){
+  setTimeout(()=>{
+   const ring=document.createElement('i');ring.className='magicRing';
+   document.body.appendChild(ring);setTimeout(()=>ring.remove(),2100);
+  },r*180);
+ }
+ const overlay=document.createElement('i');overlay.className='magicOverlay';document.body.appendChild(overlay);setTimeout(()=>overlay.remove(),1500);
+ const heart=document.createElement('i');heart.className='bigHeart';heart.textContent='❤️';document.body.appendChild(heart);setTimeout(()=>heart.remove(),1100);
+ const text=document.createElement('div');text.className='magicText';text.textContent='Happy Birthday Mita! 🎉';document.body.appendChild(text);setTimeout(()=>text.remove(),2300);
+ for(let i=0;i<12;i++){
+  setTimeout(()=>{
+   const cx=Math.random()*100,cy=15+Math.random()*55;
+   for(let j=0;j<24;j++){
+    const f=document.createElement('i');f.className='firework';
+    f.style.left=cx+'vw';f.style.top=cy+'vh';
+    f.style.background=['#ff174d','#ff3d72','#ff7b9c','#c9184a','#ffb3c6'][Math.floor(Math.random()*5)];
+    const a=Math.PI*2*j/24, d=70+Math.random()*170;
+    f.style.setProperty('--fx',Math.cos(a)*d+'px');f.style.setProperty('--fy',Math.sin(a)*d+'px');
+    document.body.appendChild(f);setTimeout(()=>f.remove(),1700);
+   }
+  },i*220);
+ }
+}
+
+function celebrate(){
+ sparkleBurst();
+ confettiBurst();
+ for(let i=0;i<80;i++){
+  const e=document.createElement('span');
+  e.textContent=['💖','💕','🎈','✨','🌸','🎉','🥳'][Math.floor(Math.random()*7)];
+  e.style.left=Math.random()*100+'vw';
+  e.style.animationDuration=(4+Math.random()*5)+'s';
+  e.style.fontSize=(18+Math.random()*28)+'px';
+  document.getElementById('hearts').appendChild(e);
+  setTimeout(()=>e.remove(),9000);
+ }
+}
+setInterval(()=>{createParticle()},350);
+setInterval(()=>{createBubble()},900);
+setInterval(()=>{floatingHeart()},1500);
+setInterval(()=>{if(Math.random()<.7) shootingStar()},4200);
+setInterval(()=>{
+ const e=document.createElement('span');e.textContent='♥';
+ e.style.left=Math.random()*100+'vw';
+ e.style.animationDuration=(6+Math.random()*5)+'s';
+ document.getElementById('hearts').appendChild(e);
+ setTimeout(()=>e.remove(),11000);
+},700);
+</script>
+
+<section class="screen" id="s6">
+<div class="bg"></div><div class="stars"></div>
+<div class="card pop">
+<div class="badge">💖 From Your Friend</div>
+<h2>তোমার জন্য শেষ একটা wish 🌷</h2>
+<p>জীবনে যত বড় স্বপ্নই দেখো, সেগুলো পূরণ করার সাহস যেন সবসময় থাকে। প্রতিটি নতুন বছরে তুমি আরও ভালো করো, আরও শিখো, আরও সফল হও।</p>
+<p class="quote">“ভালো থেকো, নিজের যত্ন নিও, আর তোমার সুন্দর হাসিটা কখনো হারিয়ে ফেলো না।”</p>
+<button class="btn" onclick="go(7)">🌸 শেষ Surprise</button>
+</div>
+</section>
+
+<section class="screen" id="s7">
+<div class="bg"></div><div class="stars"></div>
+<div class="card pop">
+<div class="badge">🎂 Birthday Finale</div>
+<h2>Once Again, Happy Birthday Mita! ❤️</h2>
+<p>তোমার আগামী দিনগুলো হোক আনন্দ, সাফল্য আর সুন্দর স্মৃতিতে ভরা। একজন বন্ধু হিসেবে তোমার জন্য রইলো অনেক অনেক শুভকামনা।</p>
+<p class="quote">May your life shine brighter every year. ✨</p>
+<button class="btn" onclick="megaMagic()">❤️ Ultimate Birthday Magic</button>
+</div>
+</section>
+</body>
+</html>
